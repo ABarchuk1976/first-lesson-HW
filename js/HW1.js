@@ -241,13 +241,13 @@
 
 // e.textContent = (valueX.includes(currentId) ? 'X' : '') + (valueY.includes(currentId) ? '0':'';
 
-const getEl = (s) => document.querySelector(s);
+// const getEl = (s) => document.querySelector(s);
 
-const content = getEl('.content');
-const playerFirstRef = getEl('.player_first');
-const playerSecondRef = getEl('.player_second');
-const btnRestart = getEl('.restart');
-const form = getEl('.login-form');
+// const content = getEl('.content');
+// const playerFirstRef = getEl('.player_first');
+// const playerSecondRef = getEl('.player_second');
+// const btnRestart = getEl('.restart');
+// const form = getEl('.login-form');
 
 // let markup = '';
 // let player = 'X';
@@ -260,26 +260,26 @@ const form = getEl('.login-form');
 // playerFirstRef.textContent = firstP;
 // playerSecondRef.textContent = secondP;
 
-const WIN = [
-  [1, 2, 3],
-  [1, 5, 9],
-  [1, 4, 7],
-  [2, 5, 8],
-  [3, 6, 9],
-  [3, 5, 7],
-  [4, 5, 6],
-  [7, 8, 9],
-];
+// const WIN = [
+//   [1, 2, 3],
+//   [1, 5, 9],
+//   [1, 4, 7],
+//   [2, 5, 8],
+//   [3, 6, 9],
+//   [3, 5, 7],
+//   [4, 5, 6],
+//   [7, 8, 9],
+// ];
 
-const value = [1, 4, 8, 7]; // це приклад valueX або valueY
+// const value = [1, 4, 8, 7]; // це приклад valueX або valueY
 
-function checkWin(value) {
-  return [...WIN].filter(([x, y, z]) => {
-    return value.includes(x) && value.includes(y) && value.includes(z);
-  }).length;
-}
+// function checkWin(value) {
+//   return [...WIN].filter(([x, y, z]) => {
+//     return value.includes(x) && value.includes(y) && value.includes(z);
+//   }).length;
+// }
 
-if (checkWin(value)) alert('Виграв гравець <підставити змінну імя гравця>');
+// if (checkWin(value)) alert('Виграв гравець <підставити змінну імя гравця>');
 
 // for (let i = 1; i <= 9; i += 1) {
 //   markup += `<div class=“item” data-id='${i}'></div>`;
@@ -344,3 +344,18 @@ if (checkWin(value)) alert('Виграв гравець <підставити з
 //   valueX = [];
 //   valueY = [];
 // }
+
+function solution(str) {
+  const res = [];
+
+  [...str.split('')].map((el, idx, arr) => {
+    res.push(el);
+    if (idx % 2) res.push(' ');
+  });
+
+  if (str.length % 2) res.push('_');
+  console.log(res);
+  return res.join('').split(' ');
+}
+
+console.log(solution('strt'));
