@@ -249,75 +249,98 @@ const playerSecondRef = getEl('.player_second');
 const btnRestart = getEl('.restart');
 const form = getEl('.login-form');
 
-let markup = '';
-let player = 'X';
+// let markup = '';
+// let player = 'X';
 
-let valueX = JSON.parse(localStorage.getItem('X')) || [];
-let valueY = JSON.parse(localStorage.getItem('0')) || [];
+// let valueX = JSON.parse(localStorage.getItem('X')) || [];
+// let valueY = JSON.parse(localStorage.getItem('0')) || [];
 
-let firstP = localStorage.getItem('playerFirst') || '';
-let secondP = localStorage.getItem('playerSecond') || '';
-playerFirstRef.textContent = firstP;
-playerSecondRef.textContent = secondP;
+// let firstP = localStorage.getItem('playerFirst') || '';
+// let secondP = localStorage.getItem('playerSecond') || '';
+// playerFirstRef.textContent = firstP;
+// playerSecondRef.textContent = secondP;
 
-for (let i = 1; i <= 9; i += 1) {
-  markup += `<div class=“item” data-id='${i}'></div>`;
-}
-content.insertAdjacentHTML('beforeend', markup);
-Array.from(content.children).forEach((e) => {
-  console.log(e);
-  const currentId = e.dataset.id;
-  if (valueX.includes(currentId)) {
-    e.textContent = 'X';
-  } else if (valueY.includes(currentId)) {
-    e.textContent = '0';
-  }
-});
+const WIN = [
+  [1, 2, 3],
+  [1, 5, 9],
+  [1, 4, 7],
+  [2, 5, 8],
+  [3, 6, 9],
+  [3, 5, 7],
+  [4, 5, 6],
+  [7, 8, 9],
+];
 
-form.addEventListener('submit', formOnClick);
-function formOnClick(evt) {
-  evt.preventDefault();
-  const { first, second } = evt.currentTarget.elements;
-  playerFirstRef.textContent = first.value;
-  playerSecondRef.textContent = second.value;
-  localStorage.setItem('playerFirst', first.value);
-  localStorage.setItem('playerSecond', second.value);
-  form.reset();
-  form.style.display = 'none';
+const value = [1, 4, 8, 7]; // це приклад valueX або valueY
+
+function checkWin(value) {
+  return [...WIN].filter(([x, y, z]) => {
+    return value.includes(x) && value.includes(y) && value.includes(z);
+  }).length;
 }
 
-content.addEventListener('click', play);
-function play(evt) {
-  if (!evt.target.textContent) {
-    evt.target.textContent = player;
-  } else {
-    alert('Зайнято!');
-    return;
-  }
-  const currentId = evt.target.dataset.id;
-  if (player === 'X') {
-    player = '0';
-    valueX.push(currentId);
-    localStorage.setItem('X', JSON.stringify(valueX));
-  } else {
-    player = 'X';
-    valueY.push(currentId);
-    localStorage.setItem('0', JSON.stringify(valueY));
-  }
-  playerFirstRef.classList.toggle('active');
-  playerSecondRef.classList.toggle('active');
-}
+if (checkWin(value)) alert('Виграв гравець <підставити змінну імя гравця>');
 
-btnRestart.addEventListener('click', onClickRestart);
-function onClickRestart() {
-  form.style.display = 'flex';
-  playerFirstRef.textContent = '';
-  playerSecondRef.textContent = '';
-  content.innerHTML = markup;
-  player = 'X';
-  playerFirstRef.classList.add('active');
-  playerSecondRef.classList.remove('active');
-  localStorage.clear();
-  valueX = [];
-  valueY = [];
-}
+// for (let i = 1; i <= 9; i += 1) {
+//   markup += `<div class=“item” data-id='${i}'></div>`;
+// }
+// content.insertAdjacentHTML('beforeend', markup);
+// Array.from(content.children).forEach((e) => {
+//   console.log(e);
+//   const currentId = e.dataset.id;
+//   if (valueX.includes(currentId)) {
+//     e.textContent = 'X';
+//   } else if (valueY.includes(currentId)) {
+//     e.textContent = '0';
+//   }
+// });
+
+// form.addEventListener('submit', formOnClick);
+// function formOnClick(evt) {
+//   evt.preventDefault();
+//   const { first, second } = evt.currentTarget.elements;
+//   playerFirstRef.textContent = first.value;
+//   playerSecondRef.textContent = second.value;
+//   localStorage.setItem('playerFirst', first.value);
+//   localStorage.setItem('playerSecond', second.value);
+//   form.reset();
+//   form.style.display = 'none';
+// }
+
+// content.addEventListener('click', play);
+// function play(evt) {
+//   if (!evt.target.textContent) {
+//     evt.target.textContent = player;
+//   } else {
+//     alert('Зайнято!');
+//     return;
+//   }
+//   const currentId = evt.target.dataset.id;
+//   if (player === 'X') {
+//     player = '0';
+//     valueX.push(currentId);
+//     if (checkWin(valueX)) alert(`Виграв гравець ${firstP}`);
+//     localStorage.setItem('X', JSON.stringify(valueX));
+//   } else {
+//     player = 'X';
+//     valueY.push(currentId);
+//     if (checkWin(valueX)) alert(`Виграв гравець ${secondP}`);
+//     localStorage.setItem('0', JSON.stringify(valueY));
+//   }
+//   playerFirstRef.classList.toggle('active');
+//   playerSecondRef.classList.toggle('active');
+// }
+
+// btnRestart.addEventListener('click', onClickRestart);
+// function onClickRestart() {
+//   form.style.display = 'flex';
+//   playerFirstRef.textContent = '';
+//   playerSecondRef.textContent = '';
+//   content.innerHTML = markup;
+//   player = 'X';
+//   playerFirstRef.classList.add('active');
+//   playerSecondRef.classList.remove('active');
+//   localStorage.clear();
+//   valueX = [];
+//   valueY = [];
+// }
