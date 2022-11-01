@@ -344,18 +344,41 @@
 //   valueX = [];
 //   valueY = [];
 // }
+// Kata 5 ================
+// function pickPeaks(arr) {
+//   let up = 0;
+//   let plato = 0;
+//   const peaksSet = { pos: [], peaks: [] };
 
-function solution(str) {
-  const res = [];
+//   if (arr.length < 3) return peaksSet;
 
-  [...str.split('')].map((el, idx, arr) => {
-    res.push(el);
-    if (idx % 2) res.push(' ');
-  });
+//   for (let i = 1; i < arr.length; i += 1) {
+//     if (arr[i - 1] < arr[i]) {
+//       up = i;
+//       plato = 0;
+//       continue;
+//     }
+//     if (arr[i - 1] === arr[i] && !plato) {
+//       if (up) plato = i - 1;
+//       continue;
+//     }
+//     if (arr[i - 1] > arr[i] && (up || plato)) {
+//       if (plato) {
+//         peaksSet.pos.push(plato);
+//         peaksSet.peaks.push(arr[plato]);
+//       } else {
+//         peaksSet.pos.push(up);
+//         peaksSet.peaks.push(arr[up]);
+//       }
+//       up = 0;
+//       plato = 0;
+//     }
+//   }
+//   return peaksSet;
+// }
 
-  if (str.length % 2) res.push('_');
-  console.log(res);
-  return res.join('').split(' ');
-}
-
-console.log(solution('strt'));
+console.log(
+  pickPeaks([
+    1, 2, 5, 4, 3, 2, 3, 6, 4, 1, 2, 3, 3, 4, 5, 3, 2, 1, 2, 3, 5, 5, 4, 3,
+  ])
+);
