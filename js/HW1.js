@@ -377,8 +377,22 @@
 //   return peaksSet;
 // }
 
-console.log(
-  pickPeaks([
-    1, 2, 5, 4, 3, 2, 3, 6, 4, 1, 2, 3, 3, 4, 5, 3, 2, 1, 2, 3, 5, 5, 4, 3,
-  ])
-);
+function rot13(message) {
+  const SMALL_LETTERS_1 = [a, b, c, d, e, f, g, h, i, j, k, l, m];
+
+  const SMALL_LETTERS_2 = [n, o, p, q, r, s, t, u, v, w, y, x, z];
+
+  const TALL_LETTERS_1 = [A, B, C, D, E, F, G, H, I, J, K, L, M];
+
+  const TALL_LETTERS_2 = [N, O, P, Q, R, S, T, U, V, W, Y, X, Z];
+
+  return message.split('').map((el, idx) => {
+    if (SMALL_LETTERS_1.includes(el)) return SMALL_LETTERS_2[idx];
+    if (SMALL_LETTERS_2.includes(el)) return SMALL_LETTERS_1[idx];
+    if (TALL_LETTERS_1.includes(el)) return TALL_LETTERS_2[idx];
+    if (TALL_LETTERS_2.includes(el)) return TALL_LETTERS_1[idx];
+    return el;
+  });
+}
+
+console.log(rot13('boby'));
