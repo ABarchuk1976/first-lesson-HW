@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 16px;
+}
+
+.heroes-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  margin-left: -30px;
+  list-style: none;
+  text-decoration: none;
+}
+
+.hero {
+  flex-basis: calc(100% / 4 - 30px);
+  margin: 0;
+  padding: 0;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+}
+
+.pagination li {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}

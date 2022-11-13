@@ -377,15 +377,174 @@
 //   return peaksSet;
 // }
 
-function add(x) {
-  function fn(n) {
-    return add(x + n);
-  }
-  fn.valueOf = function () {
-    return x;
-  };
-  return fn;
+// function add(x) {
+//   function fn(n) {
+//     return add(x + n);
+//   }
+//   fn.valueOf = function () {
+//     return x;
+//   };
+//   return fn;
+// }
+
+// function permutations(string) {
+//   if (!string) return [];
+//   if (!(string.length - 1)) return string.split('');
+
+//   let res = [string[0]];
+//   let newRes = [];
+
+//   for (let i = 1; i < string.length; i += 1) {
+//     res.forEach((el, idx) => {
+//       for (let k = 0; k <= el.length; k += 1) {
+//         let elArray = el.split('');
+//         elArray.splice(k, 0, string[i]);
+
+//         newRes.push(elArray.join(''));
+//       }
+//     });
+//     res = [...newRes];
+//     newRes = [];
+//   }
+
+//   res.forEach((el, idx, arr) => {
+//     if (!arr.includes(el, idx + 1)) newRes.push(el);
+//   });
+
+//   return newRes.sort();
+// }
+
+// console.log(permutations('abcd'));
+
+// mKDp - FMbWcxmaNtlLBq6;
+
+// https://app.getpostman.com/join-team?invite_code=13d4403e4579cbc2afe39dfe0dcfba10
+
+// https://the-one-api.dev/v2/character?limit=15&page=1
+
+// const ulRef = document.querySelector('.heroes-list');
+// const guardRef = document.querySelector('.guard');
+// let currentPage = 1;
+
+// const params = {
+//   root: null,
+//   rootMargin: '100px',
+//   threshold: 1,
+// };
+// let observer = new IntersectionObserver(observerObj, params);
+
+// function observerObj(entries) {
+//   console.log(entries);
+//   entries.forEach((el) => {
+//     if (el.isIntersecting) {
+//       currentPage += 1;
+//       getCharactors(currentPage).then((data) => {
+//         ulRef.insertAdjacentHTML('beforeend', render(data.docs));
+//         if (data.page === data.pages) {
+//           observer.unobserve(guardRef);
+//         }
+//       });
+//     }
+//   });
+// }
+// function getCharactors(page = 1) {
+//   const option = { headers: { Authorization: 'Bearer mKDp-FMbWcxmaNtlLBq6' } };
+//   const characters = fetch(
+//     `https://the-one-api.dev/v2/character?limit=150&page=${page}`,
+//     option
+//   );
+
+//   return characters.then((res) => res.json());
+// }
+// function render(data) {
+//   return data
+//     .map(
+//       ({ name, gender }) => `<li>
+//         			<p>Name: ${name}</p>
+//         			<p>Gender: ${gender}</p>
+//       			</li>`
+//     )
+//     .join('');
+// }
+
+// getCharactors().then((data) => {
+//   ulRef.insertAdjacentHTML('beforeend', render(data.docs));
+//   observer.observe(guardRef);
+// });
+
+const ulRef = document.querySelector('.heroes-list');
+const pagRef = document.querySelector('.pagination');
+
+let currentPage = 1;
+
+function createBtn(page, pages) {
+  let prevPage = page - 1;
+  let twoPrevPage = page - 2;
+  let nextPage = page + 1;
+  let twoNextPage = page + 2;
+  let markup = '';
+  const LEFT = '<';
+  const RIGHT = '>';
+
+  if (!page || page > pages) return;
+
+  if (page > 1) markup += `<li>${LEFT}</li>`;
+
+  if (page > 1) markup += `<li>1</li>`;
+
+  if (page > 4) markup += `<li>...</li>`;
+
+  if (page > 3) markup += `<li>${twoPrevPage}</li>`;
+
+  if (page > 2) markup += `<li>${prevPage}</li>`;
+
+  markup += `<li>${page}</li>`;
+
+  if (page + 1 < pages) markup += `<li>${nextPage}</li>`;
+
+  if (page + 2 < pages) markup += `<li>${twoNextPage}</li>`;
+
+  if (page + 4 < pages) markup += `<li>...</li>`;
+
+  if (page < pages) markup += `<li>${pages}</li>`;
+
+  if (page < pages) markup += `<li>${RIGHT}</li>`;
+
+  pagRef.innerHTML = markup;
 }
 
-const add1 = add(1);
-console.log(add1);
+function getCharactors(page = 1) {
+  const option = { headers: { Authorization: 'Bearer mKDp-FMbWcxmaNtlLBq6' } };
+  const characters = fetch(
+    `https://the-one-api.dev/v2/character?limit=10&page=${page}`,
+    option
+  );
+
+  return characters.then((res) => res.json());
+}
+function render(data) {
+  return data
+    .map(
+      ({ name, gender }) => `<li class="hero">
+        			<p>Name: ${name}</p><p>Gender: ${gender}</p>
+      			</li>`
+    )
+    .join('');
+}
+
+getCharactors(1).then((data) => {
+  ulRef.innerHTML = render(data.docs);
+  createBtn(data.page, data.pages);
+});
+
+pagRef.addEventListener('click', (evt) => {
+  const targeted = evt.target.textContent;
+  page = targeted;
+  if (targeted === LEFT) page -= 1;
+  if (targeted === RIGHT) page += 1;
+
+  getCharactors(page).then((data) => {
+    ulRef.innerHTML = render(data.docs);
+    createBtn(data.page, data.pages);
+  });
+});
