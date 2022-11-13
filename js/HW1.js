@@ -475,6 +475,9 @@
 const ulRef = document.querySelector('.heroes-list');
 const pagRef = document.querySelector('.pagination');
 
+const LEFT = '<';
+const RIGHT = '>';
+
 let currentPage = 1;
 
 function createBtn(page, pages) {
@@ -483,8 +486,6 @@ function createBtn(page, pages) {
   let nextPage = page + 1;
   let twoNextPage = page + 2;
   let markup = '';
-  const LEFT = '<';
-  const RIGHT = '>';
 
   if (!page || page > pages) return;
 
@@ -516,7 +517,7 @@ function createBtn(page, pages) {
 function getCharactors(page = 1) {
   const option = { headers: { Authorization: 'Bearer mKDp-FMbWcxmaNtlLBq6' } };
   const characters = fetch(
-    `https://the-one-api.dev/v2/character?limit=10&page=${page}`,
+    `https://the-one-api.dev/v2/character?limit=20&page=${page}`,
     option
   );
 
@@ -526,7 +527,10 @@ function render(data) {
   return data
     .map(
       ({ name, gender }) => `<li class="hero">
-        			<p>Name: ${name}</p><p>Gender: ${gender}</p>
+        			<p>Name: </p>
+							<p class="bold">${name}</p>
+							<p>Gender: </p>
+							<p class="bold">${gender}</p>
       			</li>`
     )
     .join('');
@@ -539,11 +543,15 @@ getCharactors(1).then((data) => {
 
 pagRef.addEventListener('click', (evt) => {
   const targeted = evt.target.textContent;
-  page = targeted;
-  if (targeted === LEFT) page -= 1;
-  if (targeted === RIGHT) page += 1;
+  if (targeted === '...') return;
 
-  getCharactors(page).then((data) => {
+  targeted === LEFT
+    ? (currentPage -= 1)
+    : targeted === RIGHT
+    ? (currentPage += 1)
+    : (currentPage = Number(targeted));
+
+  getCharactors(currentPage).then((data) => {
     ulRef.innerHTML = render(data.docs);
     createBtn(data.page, data.pages);
   });
