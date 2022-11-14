@@ -491,23 +491,23 @@ function createBtn(page, pages) {
 
   if (page > 1) markup += `<li>${LEFT}</li>`;
 
-  if (page > 1) markup += `<li>1</li>`;
+  if (page > 1) markup += `<li class="like-btn">1</li>`;
 
   if (page > 4) markup += `<li>...</li>`;
 
-  if (page > 3) markup += `<li>${twoPrevPage}</li>`;
+  if (page > 3) markup += `<li class="like-btn">${twoPrevPage}</li>`;
 
-  if (page > 2) markup += `<li>${prevPage}</li>`;
+  if (page > 2) markup += `<li class="like-btn">${prevPage}</li>`;
 
-  markup += `<li>${page}</li>`;
+  markup += `<li class="like-btn">${page}</li>`;
 
-  if (page + 1 < pages) markup += `<li>${nextPage}</li>`;
+  if (page + 1 < pages) markup += `<li class="like-btn">${nextPage}</li>`;
 
-  if (page + 2 < pages) markup += `<li>${twoNextPage}</li>`;
+  if (page + 2 < pages) markup += `<li class="like-btn">${twoNextPage}</li>`;
 
   if (page + 4 < pages) markup += `<li>...</li>`;
 
-  if (page < pages) markup += `<li>${pages}</li>`;
+  if (page < pages) markup += `<li class="like-btn">${pages}</li>`;
 
   if (page < pages) markup += `<li>${RIGHT}</li>`;
 
